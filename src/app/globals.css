@@ -1,0 +1,131 @@
+@import "tailwindcss";
+
+:root {
+  --color-ink: #0a0a0b;
+  --color-ink-soft: #151517;
+  --color-ink-line: #26262a;
+  --color-blood: #c8102e;
+  --color-blood-dark: #7a0a1c;
+  --color-bone: #f4efe4;
+  --color-bone-dim: #cfc9bb;
+  --color-steel: #93939c;
+  --color-gold: #c9a227;
+}
+
+@theme inline {
+  --color-ink: var(--color-ink);
+  --color-ink-soft: var(--color-ink-soft);
+  --color-ink-line: var(--color-ink-line);
+  --color-blood: var(--color-blood);
+  --color-blood-dark: var(--color-blood-dark);
+  --color-bone: var(--color-bone);
+  --color-bone-dim: var(--color-bone-dim);
+  --color-steel: var(--color-steel);
+  --color-gold: var(--color-gold);
+  --font-display: var(--font-anton);
+  --font-body: var(--font-inter);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-ink);
+  color: var(--color-bone);
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+}
+
+::selection {
+  background: var(--color-blood);
+  color: var(--color-bone);
+}
+
+.font-display {
+  font-family: var(--font-display), ui-sans-serif, sans-serif;
+  letter-spacing: 0.01em;
+}
+
+/* Grain texture overlay — gives the dark sections some tooth instead of flat black */
+.grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Barber pole stripe bar — used as a section divider / accent instead of a plain <hr> */
+.stripe-bar {
+  height: 10px;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--color-blood) 0 18px,
+    var(--color-bone) 18px 36px,
+    #1f4fa8 36px 54px,
+    var(--color-bone) 54px 72px
+  );
+  background-size: 200% 100%;
+  animation: pole-scroll 6s linear infinite;
+}
+
+@keyframes pole-scroll {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: -101.8px 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stripe-bar {
+    animation: none;
+  }
+}
+
+/* Diagonal section cut — sharp edges instead of soft rounded cards */
+.cut-top {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+.cut-tr {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 96%);
+}
+.cut-br {
+  clip-path: polygon(0 0, 100% 0, 100% 96%, 0 100%);
+}
+
+.text-outline {
+  -webkit-text-stroke: 1.5px var(--color-bone);
+  color: transparent;
+}
+
+/* Marquee ticker */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
+.card-edge {
+  border: 1px solid var(--color-ink-line);
+}
