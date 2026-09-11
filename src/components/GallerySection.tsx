@@ -32,7 +32,7 @@ export function GallerySection() {
                 alt={photo.alt}
                 fill
                 sizes="(min-width: 640px) 33vw, 50vw"
-                className="object-cover grayscale transition duration-500 group-hover:grayscale-0 group-hover:scale-105"
+                className="object-cover transition duration-500 group-hover:scale-105"
               />
             </div>
           ))}
