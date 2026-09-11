@@ -31,12 +31,18 @@ export function BookingWizard({
 }) {
   const [step, setStep] = useState(0);
 
-  const [serviceId, setServiceId] = useState<string | undefined>(
-    initialServiceId
+  const [serviceIds, setServiceIds] = useState<string[]>(
+    initialServiceId ? [initialServiceId] : []
   );
   const [barberId, setBarberId] = useState<string | undefined>(
     initialBarberId
   );
+
+  function toggleService(id: string) {
+    setServiceIds((prev) =>
+      prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]
+    );
+  }
 
   const serviceCategories = useMemo(
     () => Array.from(new Set(services.map((s) => s.category))),
@@ -64,27 +70,34 @@ export function BookingWizard({
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const service = services.find((s) => s.id === serviceId);
+  const selectedServices = services.filter((s) => serviceIds.includes(s.id));
+  const servicePriceCents = selectedServices.reduce(
+    (sum, s) => sum + s.price_cents,
+    0
+  );
+  const serviceDurationMinutes = selectedServices.reduce(
+    (sum, s) => sum + s.duration_minutes,
+    0
+  );
   const barber = barberId ? barbers.find((b) => b.id === barberId) : undefined;
 
   useEffect(() => {
-    if (!serviceId || !barberId || step !== 2) return;
+    if (serviceIds.length === 0 || !barberId || step !== 2) return;
     setSlotsLoading(true);
     setSelectedSlot(null);
     fetch(
-      `/api/slots?serviceId=${serviceId}&barberId=${barberId}&date=${date}`
+      `/api/slots?serviceIds=${serviceIds.join(",")}&barberId=${barberId}&date=${date}`
     )
       .then((r) => r.json())
       .then((data) => setSlots(data.slots ?? []))
       .finally(() => setSlotsLoading(false));
-  }, [serviceId, barberId, date, step]);
+  }, [serviceIds, barberId, date, step]);
 
   const totalCents =
-    (service?.price_cents ?? 0) +
-    (paymentMethod === "online" ? SHOP.cardFeeCents : 0);
+    servicePriceCents + (paymentMethod === "online" ? SHOP.cardFeeCents : 0);
 
   async function handleSubmit() {
-    if (!service || !selectedSlot) return;
+    if (selectedServices.length === 0 || !selectedSlot) return;
     setSubmitting(true);
     setSubmitError(null);
     try {
@@ -93,7 +106,7 @@ export function BookingWizard({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           barberId: selectedSlot.barberId,
-          serviceId: service.id,
+          serviceIds,
           start: selectedSlot.start,
           customerName: name,
           customerEmail: email,
@@ -117,7 +130,7 @@ export function BookingWizard({
   }
 
   const canContinue = [
-    !!serviceId,
+    serviceIds.length > 0,
     !!barberId,
     !!selectedSlot,
     name.trim().length > 0 && email.includes("@") && phone.trim().length >= 7,
@@ -160,8 +173,11 @@ export function BookingWizard({
         {step === 0 && (
           <div>
             <h2 className="font-display text-3xl tracking-wide text-bone">
-              PICK YOUR SERVICE
+              PICK YOUR SERVICES
             </h2>
+            <p className="mt-2 text-sm text-steel">
+              Select as many as you'd like — we'll book them back to back.
+            </p>
             {serviceCategories.map((cat) => (
               <div key={cat} className="mt-8 first:mt-6">
                 <h3 className="font-display text-sm uppercase tracking-widest text-gold">
@@ -170,32 +186,62 @@ export function BookingWizard({
                 <div className="mt-3 grid gap-3 sm:grid-cols-2">
                   {services
                     .filter((s) => s.category === cat)
-                    .map((s) => (
-                      <button
-                        key={s.id}
-                        onClick={() => setServiceId(s.id)}
-                        className={`card-edge flex items-center justify-between gap-3 p-4 text-left transition ${
-                          serviceId === s.id
-                            ? "border-blood bg-ink-soft"
-                            : "hover:border-bone-dim"
-                        }`}
-                      >
-                        <div>
-                          <p className="font-display tracking-wide text-bone">
-                            {s.name}
-                          </p>
-                          <p className="text-xs uppercase tracking-wider text-steel">
-                            {formatDuration(s.duration_minutes)}
-                          </p>
-                        </div>
-                        <span className="shrink-0 font-display text-xl text-bone">
-                          {formatMoney(s.price_cents)}
-                        </span>
-                      </button>
-                    ))}
+                    .map((s) => {
+                      const selected = serviceIds.includes(s.id);
+                      return (
+                        <button
+                          key={s.id}
+                          onClick={() => toggleService(s.id)}
+                          aria-pressed={selected}
+                          className={`card-edge flex items-center justify-between gap-3 p-4 text-left transition ${
+                            selected
+                              ? "border-blood bg-blood/20 shadow-[0_0_0_1px_var(--color-blood),0_0_20px_-4px_var(--color-blood)]"
+                              : "hover:border-bone-dim"
+                          }`}
+                        >
+                          <div className="flex items-center gap-3">
+                            <div
+                              className={`flex h-5 w-5 shrink-0 items-center justify-center border transition ${
+                                selected
+                                  ? "border-blood bg-blood"
+                                  : "border-ink-line"
+                              }`}
+                            >
+                              {selected && (
+                                <Check size={14} className="text-bone" />
+                              )}
+                            </div>
+                            <div>
+                              <p className="font-display tracking-wide text-bone">
+                                {s.name}
+                              </p>
+                              <p className="text-xs uppercase tracking-wider text-steel">
+                                {formatDuration(s.duration_minutes)}
+                              </p>
+                            </div>
+                          </div>
+                          <span className="shrink-0 font-display text-xl text-bone">
+                            {formatMoney(s.price_cents)}
+                          </span>
+                        </button>
+                      );
+                    })}
                 </div>
               </div>
             ))}
+
+            {serviceIds.length > 0 && (
+              <div className="card-edge mt-8 flex items-center justify-between bg-ink-soft p-4">
+                <p className="text-sm text-bone-dim">
+                  {serviceIds.length} service
+                  {serviceIds.length > 1 ? "s" : ""} selected ·{" "}
+                  {formatDuration(serviceDurationMinutes)}
+                </p>
+                <p className="font-display text-xl text-bone">
+                  {formatMoney(servicePriceCents)}
+                </p>
+              </div>
+            )}
           </div>
         )}
 
@@ -381,13 +427,16 @@ export function BookingWizard({
         )}
 
         {/* Step 4: Confirm */}
-        {step === 4 && service && selectedSlot && (
+        {step === 4 && selectedServices.length > 0 && selectedSlot && (
           <div>
             <h2 className="font-display text-3xl tracking-wide text-bone">
               CONFIRM YOUR BOOKING
             </h2>
             <div className="card-edge mt-6 space-y-3 bg-ink-soft p-6">
-              <Row label="Service" value={service.name} />
+              <Row
+                label="Services"
+                value={selectedServices.map((s) => s.name).join(", ")}
+              />
               <Row
                 label="Barber"
                 value={

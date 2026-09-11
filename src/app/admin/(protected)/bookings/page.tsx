@@ -1,13 +1,13 @@
 import { createClient } from "@/lib/supabase/server";
 import { formatMoney, formatSlotDate, formatSlotTime } from "@/lib/format";
 import { BookingActions } from "@/components/admin/BookingActions";
-import type { Barber, BookingStatus, Service } from "@/lib/types";
+import type { Barber, BookingStatus } from "@/lib/types";
 
 export default async function AdminBookingsPage() {
   const supabase = await createClient();
   const { data: bookings } = await supabase
     .from("bookings")
-    .select("*, barbers(name), services(name)")
+    .select("*, barbers(name), booking_services(service_name)")
     .order("start_at", { ascending: false })
     .limit(200);
 
@@ -34,8 +34,11 @@ export default async function AdminBookingsPage() {
             {bookings?.map((b) => {
               const barberName = (b as unknown as { barbers: Barber }).barbers
                 ?.name;
-              const serviceName = (b as unknown as { services: Service })
-                .services?.name;
+              const serviceName = (
+                b as unknown as { booking_services: { service_name: string }[] }
+              ).booking_services
+                ?.map((s) => s.service_name)
+                .join(", ");
               return (
                 <tr key={b.id}>
                   <td className="py-3 pr-4 text-bone-dim">

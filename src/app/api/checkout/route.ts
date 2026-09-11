@@ -6,7 +6,7 @@ import type { Booking } from "@/lib/types";
 
 const bodySchema = z.object({
   barberId: z.string().uuid(),
-  serviceId: z.string().uuid(),
+  serviceIds: z.array(z.string().uuid()).min(1),
   start: z.string(),
   customerName: z.string().min(1).max(200),
   customerEmail: z.string().email(),
@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
     "create_pending_booking",
     {
       p_barber_id: body.barberId,
-      p_service_id: body.serviceId,
+      p_service_ids: body.serviceIds,
       p_start_at: body.start,
       p_customer_name: body.customerName,
       p_customer_email: body.customerEmail,
@@ -71,12 +71,26 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  const [{ data: service }, { data: barber }] = await Promise.all([
-    supabase.from("services").select("name").eq("id", body.serviceId).single(),
+  const [{ data: bookedServices }, { data: barber }] = await Promise.all([
+    supabase
+      .from("booking_services")
+      .select("service_name, price_cents")
+      .eq("booking_id", booking.id),
     supabase.from("barbers").select("name").eq("id", body.barberId).single(),
   ]);
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? request.nextUrl.origin;
+
+  const serviceLineItems = (bookedServices ?? []).map((s) => ({
+    price_data: {
+      currency: "usd",
+      unit_amount: s.price_cents,
+      product_data: {
+        name: `${s.service_name} with ${barber?.name ?? "your barber"}`,
+      },
+    },
+    quantity: 1,
+  }));
 
   const stripe = getStripe();
   const session = await stripe.checkout.sessions.create({
@@ -84,14 +98,12 @@ export async function POST(request: NextRequest) {
     payment_method_types: ["card"],
     customer_email: body.customerEmail,
     line_items: [
+      ...serviceLineItems,
       {
         price_data: {
           currency: "usd",
-          unit_amount: booking.total_amount_cents,
-          product_data: {
-            name: `${service?.name ?? "Barbershop appointment"} with ${barber?.name ?? "your barber"}`,
-            description: `Includes a $${(booking.card_fee_cents / 100).toFixed(2)} card processing fee`,
-          },
+          unit_amount: booking.card_fee_cents,
+          product_data: { name: "Card processing fee" },
         },
         quantity: 1,
       },

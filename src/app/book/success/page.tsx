@@ -12,7 +12,7 @@ type Confirmation = {
   end_at: string;
   total_amount_cents: number;
   payment_method: "online" | "in_shop";
-  service_name: string;
+  service_names: string;
   barber_name: string;
 };
 
@@ -93,7 +93,7 @@ export default async function BookingSuccessPage({
 
       <div className="card-edge mt-8 space-y-3 bg-ink-soft p-6 text-left">
         <Row label="Confirmation #" value={confirmation.confirmation_code} />
-        <Row label="Service" value={confirmation.service_name} />
+        <Row label="Service" value={confirmation.service_names} />
         <Row label="Barber" value={confirmation.barber_name} />
         <Row label="Date" value={formatSlotDate(confirmation.start_at)} />
         <Row label="Time" value={formatSlotTime(confirmation.start_at)} />

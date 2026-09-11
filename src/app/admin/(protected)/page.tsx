@@ -12,7 +12,7 @@ export default async function AdminDashboardPage() {
 
   const { data: todaysBookings } = await supabase
     .from("bookings")
-    .select("*, barbers(name), services(name)")
+    .select("*, barbers(name), booking_services(service_name)")
     .gte("start_at", startOfToday.toISOString())
     .lte("start_at", endOfToday.toISOString())
     .neq("status", "cancelled")
@@ -56,8 +56,13 @@ export default async function AdminDashboardPage() {
               <div>
                 <p className="font-display tracking-wide text-bone">
                   {formatSlotTime(b.start_at)} —{" "}
-                  {(b as unknown as { services: { name: string } }).services
-                    ?.name}
+                  {(
+                    b as unknown as {
+                      booking_services: { service_name: string }[];
+                    }
+                  ).booking_services
+                    ?.map((s) => s.service_name)
+                    .join(", ")}
                 </p>
                 <p className="text-xs uppercase tracking-wider text-steel">
                   {b.customer_name} · with{" "}
