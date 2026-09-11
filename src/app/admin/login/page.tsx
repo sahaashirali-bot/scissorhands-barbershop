@@ -34,23 +34,37 @@ export default function AdminLoginPage() {
         STAFF LOGIN
       </h1>
       <form onSubmit={handleSubmit} className="mt-8 w-full space-y-4">
+        <label htmlFor="admin-email" className="sr-only">
+          Email
+        </label>
         <input
+          id="admin-email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           type="email"
           placeholder="Email"
+          autoComplete="username"
           required
-          className="w-full border border-ink-line bg-ink-soft px-4 py-3 text-bone placeholder:text-steel focus:border-blood focus:outline-none"
+          className="w-full border border-ink-line bg-ink-soft px-4 py-3 text-bone placeholder:text-steel focus:border-blood focus:outline-none focus:ring-2 focus:ring-blood/40"
         />
+        <label htmlFor="admin-password" className="sr-only">
+          Password
+        </label>
         <input
+          id="admin-password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           type="password"
           placeholder="Password"
+          autoComplete="current-password"
           required
-          className="w-full border border-ink-line bg-ink-soft px-4 py-3 text-bone placeholder:text-steel focus:border-blood focus:outline-none"
+          className="w-full border border-ink-line bg-ink-soft px-4 py-3 text-bone placeholder:text-steel focus:border-blood focus:outline-none focus:ring-2 focus:ring-blood/40"
         />
-        {error && <p className="text-sm text-blood">{error}</p>}
+        {error && (
+          <p role="alert" className="text-sm text-blood-light">
+            {error}
+          </p>
+        )}
         <button
           type="submit"
           disabled={loading}

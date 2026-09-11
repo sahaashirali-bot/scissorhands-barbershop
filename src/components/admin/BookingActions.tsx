@@ -41,7 +41,7 @@ export function BookingActions({
         <button
           disabled={isPending}
           onClick={() => set("cancelled")}
-          className="border border-ink-line px-3 py-1.5 text-xs uppercase tracking-wider text-blood hover:border-blood disabled:opacity-50"
+          className="border border-ink-line px-3 py-1.5 text-xs uppercase tracking-wider text-blood-light hover:border-blood disabled:opacity-50"
         >
           Cancel
         </button>

@@ -48,7 +48,7 @@ export function BarberCard({ barber }: { barber: Barber }) {
           New to the shop
         </p>
       )}
-      <span className="mt-4 inline-block text-sm font-medium text-blood group-hover:underline">
+      <span className="mt-4 inline-block text-sm font-medium text-blood-light group-hover:underline">
         Book with {barber.name.split(" ")[0]} →
       </span>
     </Link>

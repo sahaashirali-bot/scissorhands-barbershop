@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import { Scissors, Users, Check } from "lucide-react";
 import type { Barber, Service } from "@/lib/types";
 import {
@@ -66,6 +67,7 @@ export function BookingWizard({
   const [paymentMethod, setPaymentMethod] = useState<"online" | "in_shop">(
     "online"
   );
+  const [consent, setConsent] = useState(false);
 
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -133,7 +135,10 @@ export function BookingWizard({
     serviceIds.length > 0,
     !!barberId,
     !!selectedSlot,
-    name.trim().length > 0 && email.includes("@") && phone.trim().length >= 7,
+    name.trim().length > 0 &&
+      email.includes("@") &&
+      phone.trim().length >= 7 &&
+      consent,
     true,
   ];
 
@@ -176,7 +181,7 @@ export function BookingWizard({
               PICK YOUR SERVICES
             </h2>
             <p className="mt-2 text-sm text-steel">
-              Select as many as you'd like — we'll book them back to back.
+              Select as many as you&apos;d like — we&apos;ll book them back to back.
             </p>
             {serviceCategories.map((cat) => (
               <div key={cat} className="mt-8 first:mt-6">
@@ -356,33 +361,63 @@ export function BookingWizard({
               YOUR INFO
             </h2>
             <div className="mt-6 space-y-4">
-              <input
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Full name"
-                className="w-full border border-ink-line bg-ink-soft px-4 py-3 text-bone placeholder:text-steel focus:border-blood focus:outline-none"
-              />
-              <input
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email"
-                type="email"
-                className="w-full border border-ink-line bg-ink-soft px-4 py-3 text-bone placeholder:text-steel focus:border-blood focus:outline-none"
-              />
-              <input
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                placeholder="Phone number"
-                type="tel"
-                className="w-full border border-ink-line bg-ink-soft px-4 py-3 text-bone placeholder:text-steel focus:border-blood focus:outline-none"
-              />
-              <textarea
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-                placeholder="Anything your barber should know? (optional)"
-                rows={3}
-                className="w-full border border-ink-line bg-ink-soft px-4 py-3 text-bone placeholder:text-steel focus:border-blood focus:outline-none"
-              />
+              <div>
+                <label htmlFor="booking-name" className="sr-only">
+                  Full name
+                </label>
+                <input
+                  id="booking-name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Full name"
+                  autoComplete="name"
+                  required
+                  className="w-full border border-ink-line bg-ink-soft px-4 py-3 text-bone placeholder:text-steel focus:border-blood focus:outline-none focus:ring-2 focus:ring-blood/40"
+                />
+              </div>
+              <div>
+                <label htmlFor="booking-email" className="sr-only">
+                  Email
+                </label>
+                <input
+                  id="booking-email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  className="w-full border border-ink-line bg-ink-soft px-4 py-3 text-bone placeholder:text-steel focus:border-blood focus:outline-none focus:ring-2 focus:ring-blood/40"
+                />
+              </div>
+              <div>
+                <label htmlFor="booking-phone" className="sr-only">
+                  Phone number
+                </label>
+                <input
+                  id="booking-phone"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="Phone number"
+                  type="tel"
+                  autoComplete="tel"
+                  required
+                  className="w-full border border-ink-line bg-ink-soft px-4 py-3 text-bone placeholder:text-steel focus:border-blood focus:outline-none focus:ring-2 focus:ring-blood/40"
+                />
+              </div>
+              <div>
+                <label htmlFor="booking-notes" className="sr-only">
+                  Anything your barber should know? (optional)
+                </label>
+                <textarea
+                  id="booking-notes"
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  placeholder="Anything your barber should know? (optional)"
+                  rows={3}
+                  className="w-full border border-ink-line bg-ink-soft px-4 py-3 text-bone placeholder:text-steel focus:border-blood focus:outline-none focus:ring-2 focus:ring-blood/40"
+                />
+              </div>
 
               <div className="pt-2">
                 <p className="font-display text-sm tracking-widest text-gold">
@@ -422,6 +457,36 @@ export function BookingWizard({
                   </button>
                 </div>
               </div>
+
+              <label className="flex items-start gap-3 pt-2 text-sm text-bone-dim">
+                <input
+                  type="checkbox"
+                  checked={consent}
+                  onChange={(e) => setConsent(e.target.checked)}
+                  required
+                  className="mt-0.5 h-4 w-4 shrink-0 border border-ink-line bg-ink-soft accent-blood focus:outline-none focus:ring-2 focus:ring-blood/40"
+                />
+                <span>
+                  I agree to the{" "}
+                  <Link
+                    href="/terms"
+                    target="_blank"
+                    className="text-blood-light underline"
+                  >
+                    Terms
+                  </Link>{" "}
+                  and{" "}
+                  <Link
+                    href="/privacy"
+                    target="_blank"
+                    className="text-blood-light underline"
+                  >
+                    Privacy Policy
+                  </Link>
+                  , and consent to Scissorhands Barbershop using my name,
+                  email, and phone number to manage this booking.
+                </span>
+              </label>
             </div>
           </div>
         )}
@@ -469,7 +534,9 @@ export function BookingWizard({
               {SHOP.cancellationPolicy}
             </p>
             {submitError && (
-              <p className="mt-4 text-sm text-blood">{submitError}</p>
+              <p role="alert" className="mt-4 text-sm text-blood-light">
+                {submitError}
+              </p>
             )}
           </div>
         )}

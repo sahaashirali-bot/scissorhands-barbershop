@@ -34,7 +34,7 @@ export default async function BlockedTimesPage() {
           <select
             name="barberId"
             required
-            className="mt-1 w-full border border-ink-line bg-ink px-3 py-2 text-bone focus:border-blood focus:outline-none"
+            className="mt-1 w-full border border-ink-line bg-ink px-3 py-2 text-bone focus:border-blood focus:outline-none focus:ring-2 focus:ring-blood/40"
           >
             {barbers.map((b) => (
               <option key={b.id} value={b.id}>
@@ -50,7 +50,7 @@ export default async function BlockedTimesPage() {
           <input
             name="reason"
             placeholder="Vacation, lunch, etc."
-            className="mt-1 w-full border border-ink-line bg-ink px-3 py-2 text-bone placeholder:text-steel focus:border-blood focus:outline-none"
+            className="mt-1 w-full border border-ink-line bg-ink px-3 py-2 text-bone placeholder:text-steel focus:border-blood focus:outline-none focus:ring-2 focus:ring-blood/40"
           />
         </label>
         <label className="block">
@@ -61,7 +61,7 @@ export default async function BlockedTimesPage() {
             type="datetime-local"
             name="startAt"
             required
-            className="mt-1 w-full border border-ink-line bg-ink px-3 py-2 text-bone focus:border-blood focus:outline-none"
+            className="mt-1 w-full border border-ink-line bg-ink px-3 py-2 text-bone focus:border-blood focus:outline-none focus:ring-2 focus:ring-blood/40"
           />
         </label>
         <label className="block">
@@ -72,7 +72,7 @@ export default async function BlockedTimesPage() {
             type="datetime-local"
             name="endAt"
             required
-            className="mt-1 w-full border border-ink-line bg-ink px-3 py-2 text-bone focus:border-blood focus:outline-none"
+            className="mt-1 w-full border border-ink-line bg-ink px-3 py-2 text-bone focus:border-blood focus:outline-none focus:ring-2 focus:ring-blood/40"
           />
         </label>
         <button
@@ -107,7 +107,7 @@ export default async function BlockedTimesPage() {
                 </p>
               </div>
               <form action={deleteBlockedTime.bind(null, blk.id)}>
-                <button className="text-xs uppercase tracking-wider text-blood hover:underline">
+                <button className="text-xs uppercase tracking-wider text-blood-light hover:underline">
                   Remove
                 </button>
               </form>

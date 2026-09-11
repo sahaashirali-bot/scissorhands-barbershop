@@ -3,6 +3,7 @@ import { Anton, Inter } from "next/font/google";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { LocalBusinessSchema } from "@/components/LocalBusinessSchema";
+import { CookieNotice } from "@/components/CookieNotice";
 import "./globals.css";
 
 const anton = Anton({
@@ -56,10 +57,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${anton.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-ink text-bone">
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
         <LocalBusinessSchema />
         <SiteHeader />
-        <main className="flex-1">{children}</main>
+        <main id="main-content" className="flex-1">
+          {children}
+        </main>
         <SiteFooter />
+        <CookieNotice />
       </body>
     </html>
   );

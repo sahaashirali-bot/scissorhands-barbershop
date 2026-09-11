@@ -5,7 +5,7 @@ import { LogoMark } from "./Logo";
 export function SiteFooter() {
   return (
     <footer id="location" className="border-t border-ink-line bg-ink-soft">
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-3">
+      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-4">
         <div>
           <div className="flex items-center gap-3">
             <LogoMark className="h-10 w-10" />
@@ -56,6 +56,34 @@ export function SiteFooter() {
                 <span className="text-steel">{h.hours}</span>
               </li>
             ))}
+          </ul>
+        </div>
+
+        <div>
+          <h3 className="font-display text-sm tracking-widest text-gold">
+            LEGAL
+          </h3>
+          <ul className="mt-3 space-y-1 text-sm text-bone-dim">
+            <li>
+              <Link href="/privacy" className="hover:text-bone">
+                Privacy Policy
+              </Link>
+            </li>
+            <li>
+              <Link href="/terms" className="hover:text-bone">
+                Terms &amp; Conditions
+              </Link>
+            </li>
+            <li>
+              <Link href="/refund-policy" className="hover:text-bone">
+                Refund &amp; Cancellation Policy
+              </Link>
+            </li>
+            <li>
+              <Link href="/cookies" className="hover:text-bone">
+                Cookie Policy
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

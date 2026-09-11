@@ -78,7 +78,7 @@ export default async function AdminBookingsPage() {
 
 function StatusPill({ status }: { status: BookingStatus }) {
   const styles: Record<BookingStatus, string> = {
-    confirmed: "bg-blood/20 text-blood",
+    confirmed: "bg-blood/20 text-blood-light",
     pending_payment: "bg-gold/20 text-gold",
     completed: "bg-steel/20 text-bone-dim",
     cancelled: "bg-ink text-steel line-through",

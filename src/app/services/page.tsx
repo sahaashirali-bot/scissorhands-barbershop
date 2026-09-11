@@ -28,7 +28,7 @@ export default async function ServicesPage() {
 
       {categories.map((cat) => (
         <div key={cat} className="mt-12">
-          <h2 className="font-display text-xl uppercase tracking-widest text-blood">
+          <h2 className="font-display text-xl uppercase tracking-widest text-blood-light">
             {CATEGORY_LABELS[cat] ?? cat}
           </h2>
           <div className="mt-2">

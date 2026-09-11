@@ -128,7 +128,7 @@ export default async function HomePage() {
           </h2>
           <Link
             href="/services"
-            className="text-sm font-medium uppercase tracking-wider text-blood hover:underline"
+            className="text-sm font-medium uppercase tracking-wider text-blood-light hover:underline"
           >
             Full price list →
           </Link>

@@ -74,7 +74,7 @@ export default async function AdminDashboardPage() {
                 <span
                   className={`px-2 py-1 text-xs uppercase tracking-wider ${
                     b.status === "confirmed"
-                      ? "bg-blood/20 text-blood"
+                      ? "bg-blood/20 text-blood-light"
                       : b.status === "pending_payment"
                         ? "bg-gold/20 text-gold"
                         : "bg-ink text-steel"
@@ -93,7 +93,7 @@ export default async function AdminDashboardPage() {
 
       <Link
         href="/admin/bookings"
-        className="mt-6 inline-block text-sm text-blood hover:underline"
+        className="mt-6 inline-block text-sm text-blood-light hover:underline"
       >
         View all bookings →
       </Link>
