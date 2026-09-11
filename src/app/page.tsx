@@ -1,9 +1,11 @@
 import Link from "next/link";
-import { Scissors, MapPin, Clock, Award } from "lucide-react";
+import Image from "next/image";
+import { MapPin, Clock, Award } from "lucide-react";
 import { getBarbers, getReviews, getServices } from "@/lib/data";
 import { ServiceRow } from "@/components/ServiceRow";
 import { BarberCard } from "@/components/BarberCard";
 import { ReviewCard } from "@/components/ReviewCard";
+import { GallerySection } from "@/components/GallerySection";
 import { SHOP } from "@/lib/shop";
 
 const TICKER_ITEMS = [
@@ -61,11 +63,15 @@ export default async function HomePage() {
             </div>
 
             <div className="relative flex items-center justify-center">
-              <div className="cut-tr relative flex h-72 w-full items-center justify-center border border-ink-line bg-ink-soft sm:h-80">
-                <Scissors size={72} className="text-ink-line" />
-                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs uppercase tracking-wider text-steel">
-                  <span>Drop real shop photos in /public/images</span>
-                </div>
+              <div className="cut-tr relative h-80 w-full overflow-hidden border border-ink-line sm:h-96">
+                <Image
+                  src="/images/gallery/cut-3.jpg"
+                  alt="A fresh fade from Scissorhands Barbershop"
+                  fill
+                  priority
+                  sizes="(min-width: 768px) 40vw, 90vw"
+                  className="object-cover"
+                />
               </div>
             </div>
           </div>
@@ -151,6 +157,8 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      <GallerySection />
 
       {/* Reviews */}
       <section id="reviews" className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
