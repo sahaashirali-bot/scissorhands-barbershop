@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getServices } from "@/lib/data";
 import { ServiceRow } from "@/components/ServiceRow";
 import { SHOP } from "@/lib/shop";
+import { CATEGORY_LABELS } from "@/lib/categories";
 
 export const metadata: Metadata = {
   title: "Services & Pricing | Scissorhands Barbershop",
@@ -28,7 +29,7 @@ export default async function ServicesPage() {
       {categories.map((cat) => (
         <div key={cat} className="mt-12">
           <h2 className="font-display text-xl uppercase tracking-widest text-blood">
-            {cat}
+            {CATEGORY_LABELS[cat] ?? cat}
           </h2>
           <div className="mt-2">
             {services

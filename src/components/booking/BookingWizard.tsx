@@ -12,6 +12,7 @@ import {
   todayISODate,
 } from "@/lib/format";
 import { SHOP } from "@/lib/shop";
+import { CATEGORY_LABELS } from "@/lib/categories";
 
 type Slot = { start: string; barberId: string };
 
@@ -35,6 +36,11 @@ export function BookingWizard({
   );
   const [barberId, setBarberId] = useState<string | undefined>(
     initialBarberId
+  );
+
+  const serviceCategories = useMemo(
+    () => Array.from(new Set(services.map((s) => s.category))),
+    [services]
   );
 
   const dateOptions = useMemo(() => {
@@ -156,31 +162,40 @@ export function BookingWizard({
             <h2 className="font-display text-3xl tracking-wide text-bone">
               PICK YOUR SERVICE
             </h2>
-            <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              {services.map((s) => (
-                <button
-                  key={s.id}
-                  onClick={() => setServiceId(s.id)}
-                  className={`card-edge flex items-center justify-between gap-3 p-4 text-left transition ${
-                    serviceId === s.id
-                      ? "border-blood bg-ink-soft"
-                      : "hover:border-bone-dim"
-                  }`}
-                >
-                  <div>
-                    <p className="font-display tracking-wide text-bone">
-                      {s.name}
-                    </p>
-                    <p className="text-xs uppercase tracking-wider text-steel">
-                      {formatDuration(s.duration_minutes)}
-                    </p>
-                  </div>
-                  <span className="shrink-0 font-display text-xl text-bone">
-                    {formatMoney(s.price_cents)}
-                  </span>
-                </button>
-              ))}
-            </div>
+            {serviceCategories.map((cat) => (
+              <div key={cat} className="mt-8 first:mt-6">
+                <h3 className="font-display text-sm uppercase tracking-widest text-gold">
+                  {CATEGORY_LABELS[cat] ?? cat}
+                </h3>
+                <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                  {services
+                    .filter((s) => s.category === cat)
+                    .map((s) => (
+                      <button
+                        key={s.id}
+                        onClick={() => setServiceId(s.id)}
+                        className={`card-edge flex items-center justify-between gap-3 p-4 text-left transition ${
+                          serviceId === s.id
+                            ? "border-blood bg-ink-soft"
+                            : "hover:border-bone-dim"
+                        }`}
+                      >
+                        <div>
+                          <p className="font-display tracking-wide text-bone">
+                            {s.name}
+                          </p>
+                          <p className="text-xs uppercase tracking-wider text-steel">
+                            {formatDuration(s.duration_minutes)}
+                          </p>
+                        </div>
+                        <span className="shrink-0 font-display text-xl text-bone">
+                          {formatMoney(s.price_cents)}
+                        </span>
+                      </button>
+                    ))}
+                </div>
+              </div>
+            ))}
           </div>
         )}
 
