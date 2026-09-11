@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { Scissors } from "lucide-react";
 import { getBarberBySlug, getReviews } from "@/lib/data";
 import { StarRating } from "@/components/StarRating";
@@ -20,8 +21,20 @@ export default async function BarberPage({
   return (
     <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6">
       <div className="grid gap-8 sm:grid-cols-[220px_1fr]">
-        <div className="flex h-56 items-center justify-center border border-ink-line bg-ink-soft">
-          <Scissors size={56} className="text-ink-line" />
+        <div className="relative h-56 overflow-hidden border border-ink-line bg-ink-soft">
+          {barber.photo_url ? (
+            <Image
+              src={barber.photo_url}
+              alt={barber.name}
+              fill
+              sizes="220px"
+              className="object-cover"
+            />
+          ) : (
+            <div className="flex h-full items-center justify-center text-ink-line">
+              <Scissors size={56} />
+            </div>
+          )}
         </div>
         <div>
           <h1 className="font-display text-4xl tracking-wide text-bone sm:text-5xl">

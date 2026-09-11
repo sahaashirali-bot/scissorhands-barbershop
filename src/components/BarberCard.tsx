@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Scissors } from "lucide-react";
 import type { Barber } from "@/lib/types";
 import { StarRating } from "./StarRating";
@@ -9,8 +10,20 @@ export function BarberCard({ barber }: { barber: Barber }) {
       href={`/barbers/${barber.slug}`}
       className="group card-edge relative block overflow-hidden bg-ink-soft p-6 transition hover:border-blood"
     >
-      <div className="flex h-40 items-center justify-center border border-ink-line bg-ink text-ink-line">
-        <Scissors size={40} className="transition group-hover:text-blood" />
+      <div className="relative h-40 overflow-hidden border border-ink-line bg-ink">
+        {barber.photo_url ? (
+          <Image
+            src={barber.photo_url}
+            alt={barber.name}
+            fill
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            className="object-cover"
+          />
+        ) : (
+          <div className="flex h-full items-center justify-center text-ink-line">
+            <Scissors size={40} className="transition group-hover:text-blood" />
+          </div>
+        )}
       </div>
       <h3 className="mt-5 font-display text-2xl tracking-wide text-bone">
         {barber.name}
