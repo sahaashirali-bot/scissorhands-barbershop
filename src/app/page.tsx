@@ -65,8 +65,8 @@ export default async function HomePage() {
             <div className="relative flex items-center justify-center">
               <div className="cut-tr relative h-80 w-full overflow-hidden border border-ink-line sm:h-96">
                 <Image
-                  src="/images/gallery/cut-3.jpg"
-                  alt="A fresh fade from Scissorhands Barbershop"
+                  src="/images/shop-front.jpg"
+                  alt="Scissorhands Barbershop storefront at night"
                   fill
                   priority
                   sizes="(min-width: 768px) 40vw, 90vw"

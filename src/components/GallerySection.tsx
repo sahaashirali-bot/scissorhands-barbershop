@@ -1,9 +1,11 @@
 import Image from "next/image";
 
 const PHOTOS = [
+  { src: "/images/gallery/fb-4.jpg", alt: "Natural curl cut, in progress" },
+  { src: "/images/gallery/fb-5.jpg", alt: "Natural curl cut, finished" },
+  { src: "/images/gallery/fb-2.jpg", alt: "Clean skin fade, back view" },
   { src: "/images/gallery/cut-3.jpg", alt: "Sharp side part fade" },
   { src: "/images/gallery/cut-4.jpg", alt: "Clean taper with line-up" },
-  { src: "/images/gallery/cut-1.jpg", alt: "Precision razor part detail" },
   { src: "/images/gallery/cut-2.jpg", alt: "Undercut with disconnected fade" },
 ];
 
@@ -17,7 +19,7 @@ export function GallerySection() {
         <p className="mt-3 max-w-lg text-bone-dim">
           A few cuts straight from the chair.
         </p>
-        <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3">
           {PHOTOS.map((photo, i) => (
             <div
               key={photo.src}
@@ -29,7 +31,7 @@ export function GallerySection() {
                 src={photo.src}
                 alt={photo.alt}
                 fill
-                sizes="(min-width: 640px) 25vw, 50vw"
+                sizes="(min-width: 640px) 33vw, 50vw"
                 className="object-cover grayscale transition duration-500 group-hover:grayscale-0 group-hover:scale-105"
               />
             </div>
