@@ -1,8 +1,8 @@
 import Image from "next/image";
 
 const PHOTOS = [
-  { src: "/images/gallery/fb-4.jpg", alt: "Natural curl cut, in progress" },
   { src: "/images/gallery/fb-5.jpg", alt: "Natural curl cut, finished" },
+  { src: "/images/gallery/fb-design-cut.jpg", alt: "Custom design line work" },
   { src: "/images/gallery/fb-2.jpg", alt: "Clean skin fade, back view" },
   { src: "/images/gallery/fb-sidepart.jpg", alt: "Sharp side part fade" },
   { src: "/images/gallery/fb-beard-shave.jpg", alt: "Straight razor beard trim" },
