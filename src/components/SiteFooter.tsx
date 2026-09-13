@@ -96,9 +96,6 @@ export function SiteFooter() {
           <span>
             © {new Date().getFullYear()} {SHOP.name}
           </span>
-          <Link href="/admin/login" className="hover:text-bone-dim">
-            Staff Login
-          </Link>
         </div>
       </div>
     </footer>

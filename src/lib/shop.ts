@@ -17,7 +17,5 @@ export const SHOP = {
   ],
   cancellationPolicy:
     "Please reschedule or cancel at least 1 hour before your appointment or you may be charged a cancellation fee of 100% of the scheduled service price. Arriving more than 10 minutes late may result in your appointment being cancelled.",
-  cardFeeCents: 200,
-  bookingUrl: "https://www.vagaro.com/scissorhandsbarbershop/book-now",
-  staffUrl: "https://www.vagaro.com/scissorhandsbarbershop/staff",
+  bookingUrl: "https://www.vagaro.com/scissorhandsbarbershop",
 } as const;
