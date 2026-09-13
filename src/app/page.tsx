@@ -35,11 +35,11 @@ export default async function HomePage() {
                 LEAGUE CITY&apos;S SHARPEST CHAIR
               </p>
               <h1 className="mt-4 font-display text-5xl leading-[0.95] tracking-wide text-bone sm:text-6xl md:text-7xl">
-                FRESH CUTS.
+                FRESH CUTS
                 <br />
-                <span className="text-blood">NO WAIT.</span>
+                <span className="text-blood">FOR ALL TYPES</span>
                 <br />
-                YOUR BARBER.
+                OF HAIR.
               </h1>
               <p className="mt-6 max-w-md text-base text-bone-dim">
                 Razor fades, hot towel shaves, and clean lineups from a crew
@@ -47,12 +47,14 @@ export default async function HomePage() {
                 your time, and walk out sharp.
               </p>
               <div className="mt-8 flex flex-wrap gap-4">
-                <Link
-                  href="/book"
+                <a
+                  href={SHOP.bookingUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="bg-blood px-8 py-4 font-display text-lg tracking-wider text-bone transition hover:bg-blood-dark"
                 >
                   BOOK YOUR CUT
-                </Link>
+                </a>
                 <a
                   href={SHOP.phoneHref}
                   className="border border-ink-line px-8 py-4 font-display text-lg tracking-wider text-bone transition hover:border-bone"
@@ -181,12 +183,14 @@ export default async function HomePage() {
           <p className="mt-3 text-bone/80">
             Pick your barber, pick your time — takes less than a minute.
           </p>
-          <Link
-            href="/book"
+          <a
+            href={SHOP.bookingUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             className="mt-8 inline-block bg-ink px-10 py-4 font-display text-lg tracking-wider text-bone transition hover:bg-ink-soft"
           >
             BOOK NOW
-          </Link>
+          </a>
         </div>
       </section>
     </>

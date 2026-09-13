@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { LogoMark, LogoWordmark } from "./Logo";
+import { SHOP } from "@/lib/shop";
 
 const NAV = [
   { href: "/", label: "Home" },
@@ -42,12 +43,14 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <Link
-            href="/book"
+          <a
+            href={SHOP.bookingUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             className="hidden rounded-none bg-blood px-5 py-2.5 font-display text-sm tracking-wider text-bone transition hover:bg-blood-dark sm:block"
           >
             BOOK NOW
-          </Link>
+          </a>
           <button
             className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 md:hidden"
             aria-label="Toggle menu"
@@ -79,12 +82,14 @@ export function SiteHeader() {
                 {item.label}
               </Link>
             ))}
-            <Link
-              href="/book"
+            <a
+              href={SHOP.bookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-2 bg-blood px-5 py-3 text-center font-display tracking-wider text-bone"
             >
               BOOK NOW
-            </Link>
+            </a>
           </nav>
         </div>
       )}

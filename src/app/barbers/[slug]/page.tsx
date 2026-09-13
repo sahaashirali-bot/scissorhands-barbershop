@@ -1,10 +1,10 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import Image from "next/image";
 import { Scissors } from "lucide-react";
 import { getBarberBySlug, getReviews } from "@/lib/data";
 import { StarRating } from "@/components/StarRating";
 import { ReviewCard } from "@/components/ReviewCard";
+import { SHOP } from "@/lib/shop";
 
 export default async function BarberPage({
   params,
@@ -56,12 +56,18 @@ export default async function BarberPage({
             </p>
           )}
           <p className="mt-5 max-w-xl text-bone-dim">{barber.bio}</p>
-          <Link
-            href={`/book?barber=${barber.slug}`}
+          <a
+            href={SHOP.bookingUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             className="mt-6 inline-block bg-blood px-8 py-3 font-display text-lg tracking-wider text-bone transition hover:bg-blood-dark"
           >
             BOOK WITH {barber.name.split(" ")[0].toUpperCase()}
-          </Link>
+          </a>
+          <p className="mt-2 text-xs text-steel">
+            Opens our online booking — select {barber.name.split(" ")[0]} as
+            your professional.
+          </p>
         </div>
       </div>
 

@@ -5,7 +5,7 @@ const PHOTOS = [
   { src: "/images/gallery/fb-design-cut.jpg", alt: "Custom design line work" },
   { src: "/images/gallery/fb-2.jpg", alt: "Clean skin fade, back view" },
   { src: "/images/gallery/fb-sidepart.jpg", alt: "Sharp side part fade" },
-  { src: "/images/gallery/fb-beard-shave.jpg", alt: "Straight razor beard trim" },
+  { src: "/images/gallery/fb-beard-shave.jpg", alt: "Curly top fade with clean beard lineup" },
   { src: "/images/gallery/cut-2.jpg", alt: "Undercut with disconnected fade" },
 ];
 
