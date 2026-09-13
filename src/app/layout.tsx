@@ -3,7 +3,6 @@ import { Anton, Inter } from "next/font/google";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { LocalBusinessSchema } from "@/components/LocalBusinessSchema";
-import { CookieNotice } from "@/components/CookieNotice";
 import "./globals.css";
 
 const anton = Anton({
@@ -66,7 +65,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <SiteFooter />
-        <CookieNotice />
       </body>
     </html>
   );

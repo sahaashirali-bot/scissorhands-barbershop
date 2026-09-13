@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: "The terms that apply when you book or use the Scissorhands Barbershop website.",
 };
 
-const UPDATED = "September 11, 2026";
+const UPDATED = "September 13, 2026";
 
 export default function TermsPage() {
   return (
@@ -16,18 +16,19 @@ export default function TermsPage() {
       <LegalSection heading="Agreement">
         <p>
           These terms apply whenever you use this website or book an
-          appointment with {SHOP.name}. By booking online, you agree to
-          them. If you don&apos;t agree, please book by phone or in person
-          instead.
+          appointment with {SHOP.name}. By booking, you agree to them. If
+          you don&apos;t agree, please book by phone or in person instead.
         </p>
       </LegalSection>
 
       <LegalSection heading="Booking appointments">
         <p>
-          Booking through this site holds a specific time slot with a
-          specific barber. Prices and durations shown at checkout are the
-          prices in effect at the time of booking; we may update our menu
-          and prices going forward.
+          This site&apos;s &quot;Book Now&quot; buttons take you to our
+          online booking partner, Vagaro, to pick a service, barber, and
+          time — Vagaro&apos;s own terms apply to your use of their
+          booking system. Prices shown on this site are current at time of
+          publishing; we may update our menu and prices going forward, and
+          the price shown at checkout on Vagaro governs.
         </p>
       </LegalSection>
 
@@ -44,11 +45,10 @@ export default function TermsPage() {
 
       <LegalSection heading="Payment">
         <p>
-          You can pay online at booking (card, via Stripe, plus a small
-          processing fee) or in person at the shop (cash or card). Paying
-          online secures your appointment; paying in-shop does not
-          guarantee your slot against late cancellation by other
-          customers.
+          You can pay online through Vagaro when you book, or in person at
+          the shop (cash or card). Card payments made through Vagaro are
+          processed by Vagaro and its payment processor, not by us — we
+          never see or store your card details.
         </p>
       </LegalSection>
 
@@ -82,9 +82,10 @@ export default function TermsPage() {
         <p>
           To the extent allowed by law, {SHOP.name} is not liable for
           indirect or incidental damages arising from your use of this
-          website or its booking system (for example, a technical error
-          that delays a booking confirmation). This doesn&apos;t limit any
-          liability that can&apos;t be limited under Texas law.
+          website or Vagaro&apos;s booking system (for example, a
+          technical error on Vagaro&apos;s end that delays a booking
+          confirmation). This doesn&apos;t limit any liability that
+          can&apos;t be limited under Texas law.
         </p>
       </LegalSection>
 

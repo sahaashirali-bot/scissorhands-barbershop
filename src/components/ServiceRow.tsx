@@ -1,11 +1,13 @@
-import Link from "next/link";
 import type { Service } from "@/lib/types";
 import { formatDuration, formatMoney } from "@/lib/format";
+import { SHOP } from "@/lib/shop";
 
 export function ServiceRow({ service }: { service: Service }) {
   return (
-    <Link
-      href={`/book?service=${service.slug}`}
+    <a
+      href={SHOP.bookingUrl}
+      target="_blank"
+      rel="noopener noreferrer"
       className="group flex items-center justify-between gap-4 border-b border-ink-line py-5 transition hover:bg-ink-soft"
     >
       <div>
@@ -24,6 +26,6 @@ export function ServiceRow({ service }: { service: Service }) {
       <div className="shrink-0 font-display text-2xl text-bone">
         {formatMoney(service.price_cents)}
       </div>
-    </Link>
+    </a>
   );
 }

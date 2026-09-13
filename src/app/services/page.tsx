@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { getServices } from "@/lib/data";
 import { ServiceRow } from "@/components/ServiceRow";
-import { SHOP } from "@/lib/shop";
 import { CATEGORY_LABELS } from "@/lib/categories";
 
 export const metadata: Metadata = {
@@ -22,8 +21,8 @@ export default async function ServicesPage() {
         THE MENU
       </h1>
       <p className="mt-4 max-w-lg text-bone-dim">
-        Card payments carry a {(SHOP.cardFeeCents / 100).toFixed(2)}{" "}
-        processing fee, same as in the shop. Cash always welcome.
+        Book online and pick your service, barber, and time. Cash and card
+        both welcome in the shop.
       </p>
 
       {categories.map((cat) => (

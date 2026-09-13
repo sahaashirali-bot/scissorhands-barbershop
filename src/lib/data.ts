@@ -35,18 +35,6 @@ export async function getServices(): Promise<Service[]> {
   return data;
 }
 
-export async function getServiceBySlug(slug: string): Promise<Service | null> {
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("services")
-    .select("*")
-    .eq("slug", slug)
-    .eq("active", true)
-    .maybeSingle();
-  if (error) throw error;
-  return data;
-}
-
 export async function getReviews(): Promise<Review[]> {
   const supabase = await createClient();
   const { data, error } = await supabase
